@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import { Plus, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -7,13 +8,25 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 interface ProjectSidebarProps {
   isOpen: boolean
   onClose: () => void
+  toggleRef?: React.RefObject<HTMLButtonElement | null>
 }
 
-export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
+export function ProjectSidebar({ isOpen, onClose, toggleRef }: ProjectSidebarProps) {
+  const wasOpen = useRef(false)
+
+  useEffect(() => {
+    if (wasOpen.current && !isOpen) {
+      toggleRef?.current?.focus()
+    }
+    wasOpen.current = isOpen
+  }, [isOpen, toggleRef])
+
   return (
     <aside
+      aria-hidden={!isOpen}
+      inert={!isOpen}
       className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-border-default bg-bg-surface transition-transform duration-200 ease-in-out ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
+        isOpen ? "translate-x-0" : "-translate-x-full pointer-events-none"
       }`}
     >
       <div className="flex h-12 shrink-0 items-center justify-between border-b border-border-default px-4">
@@ -21,6 +34,7 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
         <Button
           variant="ghost"
           size="icon"
+          aria-label="Close sidebar"
           onClick={onClose}
           className="h-7 w-7 text-text-muted hover:text-text-primary"
         >

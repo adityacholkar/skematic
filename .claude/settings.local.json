@@ -4,7 +4,18 @@
       "Bash(npm install *)",
       "Bash(npx shadcn@latest init --defaults)",
       "Bash(npx shadcn@latest add card dialog input tabs textarea scroll-area --yes)",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(npx next *)",
+      "Bash(npm run *)",
+      "Bash(git -C /Users/adityacholkar/Personal-projects/ghost-ai status)",
+      "Bash(git -C /Users/adityacholkar/Personal-projects/ghost-ai log --oneline -5)",
+      "Bash(git -C /Users/adityacholkar/Personal-projects/ghost-ai checkout -b development)",
+      "Bash(git -C /Users/adityacholkar/Personal-projects/ghost-ai add context/progress-tracker.md context/feature-specs/02-editor.md components/editor/)",
+      "Bash(git -C /Users/adityacholkar/Personal-projects/ghost-ai diff --staged --stat)",
+      "Bash(git -C /Users/adityacholkar/Personal-projects/ghost-ai add components/editor/editor-shell.tsx app/editor/layout.tsx app/editor/page.tsx)",
+      "Bash(git -C /Users/adityacholkar/Personal-projects/ghost-ai commit -m ' *)",
+      "Bash(git -C /Users/adityacholkar/Personal-projects/ghost-ai push -u origin development)",
+      "Bash(git add *)"
     ]
   }
 }

@@ -6,16 +6,20 @@ import { Button } from "@/components/ui/button"
 interface EditorNavbarProps {
   isSidebarOpen: boolean
   onToggleSidebar: () => void
+  toggleRef?: React.RefObject<HTMLButtonElement | null>
 }
 
-export function EditorNavbar({ isSidebarOpen, onToggleSidebar }: EditorNavbarProps) {
+export function EditorNavbar({ isSidebarOpen, onToggleSidebar, toggleRef }: EditorNavbarProps) {
   return (
     <header className="fixed inset-x-0 top-0 z-40 flex h-12 items-center border-b border-border-default bg-bg-surface px-3">
       <div className="flex flex-1 items-center">
         <Button
+          ref={toggleRef}
           variant="ghost"
           size="icon"
           onClick={onToggleSidebar}
+          aria-label={isSidebarOpen ? "Close sidebar" : "Open sidebar"}
+          aria-expanded={isSidebarOpen}
           className="h-8 w-8 text-text-muted hover:text-text-primary"
         >
           {isSidebarOpen ? (

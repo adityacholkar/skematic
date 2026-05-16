@@ -3,6 +3,9 @@
 import { useRef, useState } from "react"
 import { EditorNavbar } from "./editor-navbar"
 import { ProjectSidebar } from "./project-sidebar"
+import { ProjectDialogs } from "./project-dialogs"
+import { useProjectDialogs } from "@/hooks/use-project-dialogs"
+import { ProjectDialogsContext } from "@/contexts/project-dialogs-context"
 
 interface EditorShellProps {
   children: React.ReactNode
@@ -11,20 +14,24 @@ interface EditorShellProps {
 export function EditorShell({ children }: EditorShellProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const toggleRef = useRef<HTMLButtonElement>(null)
+  const dialogs = useProjectDialogs()
 
   return (
-    <div className="relative h-screen overflow-hidden bg-bg-base">
-      <EditorNavbar
-        isSidebarOpen={isSidebarOpen}
-        onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
-        toggleRef={toggleRef}
-      />
-      <ProjectSidebar
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-        toggleRef={toggleRef}
-      />
-      <main className="h-full pt-12">{children}</main>
-    </div>
+    <ProjectDialogsContext.Provider value={dialogs}>
+      <div className="relative h-screen overflow-hidden bg-bg-base">
+        <EditorNavbar
+          isSidebarOpen={isSidebarOpen}
+          onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
+          toggleRef={toggleRef}
+        />
+        <ProjectSidebar
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+          toggleRef={toggleRef}
+        />
+        <main className="h-full pt-12">{children}</main>
+        <ProjectDialogs {...dialogs} />
+      </div>
+    </ProjectDialogsContext.Provider>
   )
 }

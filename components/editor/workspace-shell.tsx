@@ -31,6 +31,7 @@ export function WorkspaceShell({ project, ownedProjects, sharedProjects }: Works
         isAiSidebarOpen={isAiSidebarOpen}
         onToggleAiSidebar={() => setIsAiSidebarOpen((prev) => !prev)}
         onOpenShare={() => setIsShareOpen(true)}
+        sidebarToggleRef={sidebarToggleRef}
       />
       <ProjectSidebar
         isOpen={isSidebarOpen}

@@ -1,4 +1,3 @@
-import { currentUser } from "@clerk/nextjs/server"
 import { prisma } from "@/lib/prisma"
 
 export interface ProjectSummary {
@@ -14,11 +13,7 @@ export async function getOwnedProjects(userId: string): Promise<ProjectSummary[]
   })
 }
 
-export async function getSharedProjects(): Promise<ProjectSummary[]> {
-  const user = await currentUser()
-  const email = user?.emailAddresses[0]?.emailAddress
-  if (!email) return []
-
+export async function getSharedProjects(email: string): Promise<ProjectSummary[]> {
   const collaborations = await prisma.projectCollaborator.findMany({
     where: { email },
     select: { project: { select: { id: true, name: true } } },

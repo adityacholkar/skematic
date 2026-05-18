@@ -19,7 +19,7 @@ export default async function WorkspacePage({ params }: PageProps) {
 
   const [ownedProjects, sharedProjects] = await Promise.all([
     getOwnedProjects(identity.userId),
-    getSharedProjects(),
+    identity.email ? getSharedProjects(identity.email) : Promise.resolve([]),
   ])
 
   return (

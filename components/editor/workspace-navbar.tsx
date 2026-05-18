@@ -1,5 +1,6 @@
 "use client"
 
+import type { RefObject } from "react"
 import { PanelLeftClose, PanelLeftOpen, Share2, MessageSquare } from "lucide-react"
 import { UserButton } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
@@ -11,6 +12,7 @@ interface WorkspaceNavbarProps {
   isAiSidebarOpen: boolean
   onToggleAiSidebar: () => void
   onOpenShare: () => void
+  sidebarToggleRef?: RefObject<HTMLButtonElement | null>
 }
 
 export function WorkspaceNavbar({
@@ -20,11 +22,13 @@ export function WorkspaceNavbar({
   isAiSidebarOpen,
   onToggleAiSidebar,
   onOpenShare,
+  sidebarToggleRef,
 }: WorkspaceNavbarProps) {
   return (
     <header className="fixed inset-x-0 top-0 z-40 flex h-12 items-center border-b border-border-default bg-bg-surface px-3">
       <div className="flex flex-1 items-center">
         <Button
+          ref={sidebarToggleRef}
           variant="ghost"
           size="icon"
           onClick={onToggleSidebar}

@@ -13,6 +13,7 @@ interface ProjectSidebarProps {
   toggleRef?: React.RefObject<HTMLButtonElement | null>
   ownedProjects: ProjectSummary[]
   sharedProjects: ProjectSummary[]
+  activeProjectId?: string
 }
 
 export function ProjectSidebar({
@@ -21,6 +22,7 @@ export function ProjectSidebar({
   toggleRef,
   ownedProjects,
   sharedProjects,
+  activeProjectId,
 }: ProjectSidebarProps) {
   const wasOpen = useRef(false)
   const { openCreate, openRename, openDelete } = useProjectActionsContext()
@@ -82,7 +84,7 @@ export function ProjectSidebar({
                   {ownedProjects.map((project) => (
                     <li
                       key={project.id}
-                      className="group flex items-center gap-1 rounded-lg px-2 py-1.5 hover:bg-bg-elevated"
+                      className={`group flex items-center gap-1 rounded-lg px-2 py-1.5 hover:bg-bg-elevated ${project.id === activeProjectId ? "bg-bg-elevated" : ""}`}
                     >
                       <span className="flex-1 truncate text-sm text-text-secondary group-hover:text-text-primary">
                         {project.name}
@@ -123,7 +125,7 @@ export function ProjectSidebar({
                   {sharedProjects.map((project) => (
                     <li
                       key={project.id}
-                      className="flex items-center rounded-lg px-2 py-1.5 hover:bg-bg-elevated"
+                      className={`flex items-center rounded-lg px-2 py-1.5 hover:bg-bg-elevated ${project.id === activeProjectId ? "bg-bg-elevated" : ""}`}
                     >
                       <span className="flex-1 truncate text-sm text-text-secondary">
                         {project.name}

@@ -4,7 +4,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Feature 07: Wire editor home — complete
+- Feature 09: Share dialog — complete
 
 ## Completed
 
@@ -15,6 +15,8 @@ Update this file whenever the current phase, active feature, or implementation s
 - **05-prisma**: `prisma/models/project.prisma` defines `ProjectStatus` enum, `Project` model (ownerId, name, optional description, status, canvasJsonPath, timestamps, indexes on ownerId and createdAt), and `ProjectCollaborator` model (project relation with cascade delete, email, createdAt, unique on project/email, indexes on email and project/createdAt). `lib/prisma.ts` exports a cached `PrismaClient` singleton using `@prisma/adapter-pg`; branches on `DATABASE_URL` prefix (`prisma+postgres://` vs. direct). Migration `20260517034542_init_projects` applied to Prisma Postgres. Client generated to `app/generated/prisma/`.
 - **06-project-apis**: `app/api/projects/route.ts` — GET lists the authenticated user's projects ordered by `createdAt` desc; POST creates a project with `ownerId` from Clerk `userId`, defaulting `name` to `"Untitled Project"`. `app/api/projects/[projectId]/route.ts` — PATCH renames a project (owner-only, 403 for non-owners); DELETE removes a project (owner-only, 204 on success). Both routes return 401 for unauthenticated requests. No UI wiring.
 - **07-wire-editor-home**: `app/editor/page.tsx` is now a server component that fetches owned and shared projects via `lib/data/projects.ts` and passes them to `EditorHomeShell`. `contexts/sidebar-state-context.tsx` provides `isSidebarOpen`/`toggleSidebar`/`closeSidebar`/`toggleRef` so `EditorNavbar` and `EditorHomeShell` share sidebar state without prop-drilling through the layout. `EditorShell` is slimmed to navbar + main wrapper; sidebar and dialogs live in `EditorHomeShell` (page-level). `hooks/use-project-actions.ts` replaces the mock hook: calls real `POST`/`PATCH`/`DELETE` API routes, generates a `slug-suffix` room ID, navigates to the new workspace after create, refreshes after rename/delete, and redirects to `/editor` when deleting the active workspace. POST API updated to accept an optional custom `id` (validated against a safe slug pattern) so project ID and Liveblocks room ID stay aligned. Create dialog shows the room ID preview.
+- **08-editor-workspace-shell**: `lib/project-access.ts` exposes `getCurrentIdentity` (Clerk userId + primary email) and `getProjectAccess` (owner-or-collaborator check). `components/editor/access-denied.tsx` — centered lock icon, message, and link back to `/editor`. `app/editor/[roomId]/page.tsx` — server component: unauthenticated users redirect to `/sign-in`; missing or unauthorized projects render `AccessDenied`; valid access renders `WorkspaceShell` with project + sidebar data. `EditorShell` refactored to drop `EditorNavbar` (now just `SidebarStateProvider` + wrapper div); `EditorHomeShell` renders `EditorNavbar` itself. `ProjectSidebar` gains optional `activeProjectId` prop to highlight the current room. `components/editor/workspace-navbar.tsx` — fixed navbar with project name in center, share button + AI sidebar toggle + UserButton on the right. `components/editor/workspace-shell.tsx` — client shell managing left sidebar and AI sidebar state; renders `WorkspaceNavbar`, `ProjectSidebar`, canvas placeholder, and collapsible AI sidebar placeholder.
+- **09-share-dialog**: `ProjectAccess` extended with `isOwner: boolean`. `app/api/projects/[projectId]/collaborators/route.ts` — GET lists collaborators enriched via Clerk `getUserList` (name + imageUrl, email fallback), accessible to owners and collaborators; POST invites by email (owner-only, 409 on duplicate); DELETE removes by email (owner-only). `components/editor/share-dialog.tsx` — Dialog: owners see invite input, collaborator list with remove buttons, and copy-link button with "Copied!" feedback; collaborators see read-only list. Collaborator items show Clerk avatar/name when available, fall back to email initials. `WorkspaceNavbar` gains `onOpenShare` prop wired to the Share button. `WorkspaceShell` manages `isShareOpen` state and renders `ShareDialog`.
 
 ## In Progress
 
@@ -22,7 +24,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Next Up
 
-- Feature 08 (TBD — per spec files).
+- Feature 10 (TBD — per spec files).
 
 ## Open Questions
 

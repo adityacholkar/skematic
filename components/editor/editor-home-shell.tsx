@@ -5,6 +5,7 @@ import { ProjectActionsContext } from "@/contexts/project-dialogs-context"
 import { useSidebarState } from "@/contexts/sidebar-state-context"
 import { ProjectSidebar } from "./project-sidebar"
 import { ProjectDialogs } from "./project-dialogs"
+import { EditorNavbar } from "./editor-navbar"
 import { EditorHome } from "./editor-home"
 import type { ProjectSummary } from "@/lib/data/projects"
 
@@ -19,14 +20,17 @@ export function EditorHomeShell({ ownedProjects, sharedProjects }: EditorHomeShe
 
   return (
     <ProjectActionsContext.Provider value={actions}>
-      <ProjectSidebar
-        isOpen={isSidebarOpen}
-        onClose={closeSidebar}
-        toggleRef={toggleRef}
-        ownedProjects={ownedProjects}
-        sharedProjects={sharedProjects}
-      />
-      <EditorHome />
+      <EditorNavbar />
+      <div className="h-full pt-12">
+        <ProjectSidebar
+          isOpen={isSidebarOpen}
+          onClose={closeSidebar}
+          toggleRef={toggleRef}
+          ownedProjects={ownedProjects}
+          sharedProjects={sharedProjects}
+        />
+        <EditorHome />
+      </div>
       <ProjectDialogs {...actions} />
     </ProjectActionsContext.Provider>
   )

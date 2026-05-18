@@ -20,7 +20,11 @@
       "Bash(git push *)",
       "Bash(mkdir -p /Users/adityacholkar/Personal-projects/ghost-ai/app/sign-in/\\\\[\\\\[...sign-in\\\\]\\\\])",
       "Bash(mkdir -p /Users/adityacholkar/Personal-projects/ghost-ai/app/sign-up/\\\\[\\\\[...sign-up\\\\]\\\\])",
-      "Bash(npx prisma *)"
+      "Bash(npx prisma *)",
+      "Bash(mkdir -p /Users/adityacholkar/Personal-projects/ghost-ai/app/api/projects/\\\\[projectId\\\\])"
+    ],
+    "additionalDirectories": [
+      "/Users/adityacholkar/Personal-projects/ghost-ai/app/api/projects"
     ]
   }
 }

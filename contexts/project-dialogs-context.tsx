@@ -1,12 +1,12 @@
 "use client"
 
 import { createContext, useContext } from "react"
-import type { ProjectDialogsHook } from "@/hooks/use-project-dialogs"
+import type { ProjectActionsHook } from "@/hooks/use-project-actions"
 
-export const ProjectDialogsContext = createContext<ProjectDialogsHook | null>(null)
+export const ProjectActionsContext = createContext<ProjectActionsHook | null>(null)
 
-export function useProjectDialogsContext(): ProjectDialogsHook {
-  const ctx = useContext(ProjectDialogsContext)
-  if (!ctx) throw new Error("useProjectDialogsContext must be used within EditorShell")
+export function useProjectActionsContext(): ProjectActionsHook {
+  const ctx = useContext(ProjectActionsContext)
+  if (!ctx) throw new Error("useProjectActionsContext must be used within EditorHomeShell")
   return ctx
 }

@@ -4,18 +4,26 @@ import { useEffect, useRef } from "react"
 import { Pencil, Plus, Trash2, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useProjectDialogsContext } from "@/contexts/project-dialogs-context"
+import { useProjectActionsContext } from "@/contexts/project-dialogs-context"
+import type { ProjectSummary } from "@/lib/data/projects"
 
 interface ProjectSidebarProps {
   isOpen: boolean
   onClose: () => void
   toggleRef?: React.RefObject<HTMLButtonElement | null>
+  ownedProjects: ProjectSummary[]
+  sharedProjects: ProjectSummary[]
 }
 
-export function ProjectSidebar({ isOpen, onClose, toggleRef }: ProjectSidebarProps) {
+export function ProjectSidebar({
+  isOpen,
+  onClose,
+  toggleRef,
+  ownedProjects,
+  sharedProjects,
+}: ProjectSidebarProps) {
   const wasOpen = useRef(false)
-  const { projects, sharedProjects, openCreate, openRename, openDelete } =
-    useProjectDialogsContext()
+  const { openCreate, openRename, openDelete } = useProjectActionsContext()
 
   useEffect(() => {
     if (wasOpen.current && !isOpen) {
@@ -65,13 +73,13 @@ export function ProjectSidebar({ isOpen, onClose, toggleRef }: ProjectSidebarPro
             </TabsList>
 
             <TabsContent value="my-projects" className="mt-3 flex-1 overflow-y-auto">
-              {projects.length === 0 ? (
+              {ownedProjects.length === 0 ? (
                 <div className="flex h-full items-center justify-center">
                   <p className="text-sm text-text-faint">No projects yet</p>
                 </div>
               ) : (
                 <ul className="flex flex-col gap-0.5">
-                  {projects.map((project) => (
+                  {ownedProjects.map((project) => (
                     <li
                       key={project.id}
                       className="group flex items-center gap-1 rounded-lg px-2 py-1.5 hover:bg-bg-elevated"

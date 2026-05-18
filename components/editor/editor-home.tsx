@@ -2,10 +2,10 @@
 
 import { Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useProjectDialogsContext } from "@/contexts/project-dialogs-context"
+import { useProjectActionsContext } from "@/contexts/project-dialogs-context"
 
 export function EditorHome() {
-  const { openCreate } = useProjectDialogsContext()
+  const { openCreate } = useProjectActionsContext()
 
   return (
     <div className="flex h-full items-center justify-center">

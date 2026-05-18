@@ -9,24 +9,17 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import type { ProjectDialogsHook } from "@/hooks/use-project-dialogs"
-
-function toSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-}
+import type { ProjectActionsHook } from "@/hooks/use-project-actions"
 
 type Props = Pick<
-  ProjectDialogsHook,
+  ProjectActionsHook,
   | "activeDialog"
   | "targetProject"
   | "createName"
   | "setCreateName"
   | "renameName"
   | "setRenameName"
+  | "roomIdPreview"
   | "isLoading"
   | "closeDialog"
   | "handleCreate"
@@ -41,6 +34,7 @@ export function ProjectDialogs({
   setCreateName,
   renameName,
   setRenameName,
+  roomIdPreview,
   isLoading,
   closeDialog,
   handleCreate,
@@ -68,12 +62,12 @@ export function ProjectDialogs({
               onChange={(e) => setCreateName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleCreate()}
             />
-            <p className="text-xs text-text-muted">
-              {" "}
-              <span className="font-mono text-text-secondary">
-                {toSlug(createName)}
-              </span>
-            </p>
+            {roomIdPreview && (
+              <p className="text-xs text-text-muted">
+                Room ID:{" "}
+                <span className="font-mono text-text-secondary">{roomIdPreview}</span>
+              </p>
+            )}
           </div>
           <div className="flex justify-end gap-2 pt-1">
             <Button variant="outline" onClick={closeDialog} disabled={isLoading}>
